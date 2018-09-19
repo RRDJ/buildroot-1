@@ -35,6 +35,27 @@ config BR2_PACKAGE_SUNXI_MALI_MAINLINE_REVISION
 	default "r6p2"	if BR2_PACKAGE_SUNXI_MALI_MAINLINE_R6P2
 	default "r8p1"	if BR2_PACKAGE_SUNXI_MALI_MAINLINE_R8P1
 
+choice
+	prompt "Blob type"
+	default BR2_PACKAGE_SUNXI_MALI_MAINLINE_FBDEV
+	help
+	  Select the type of blobs and headers.
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_FBDEV
+	bool "fbdev"
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_X11
+	bool "x11"
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_WAYLAND
+	bool "wayland"
+
+endchoice
+
+config BR2_PACKAGE_SUNXI_MALI_MAINLINE_BLOB_TYPE
+	string
+	default "fbdev"		if BR2_PACKAGE_SUNXI_MALI_MAINLINE_FBDEV
+	default "x11"		if BR2_PACKAGE_SUNXI_MALI_MAINLINE_X11
+	default "wayland"	if BR2_PACKAGE_SUNXI_MALI_MAINLINE_WAYLAND
+
 endif
 
 comment "sunxi-mali needs an EABIhf glibc toolchain"

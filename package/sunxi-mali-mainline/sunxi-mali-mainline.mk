@@ -16,6 +16,10 @@ SUNXI_MALI_MAINLINE_LICENSE_FILES = $(SUNXI_MALI_MAINLINE_EULA_NO_SPACES)
 SUNXI_MALI_MAINLINE_REV = $(call qstrip,$(BR2_PACKAGE_SUNXI_MALI_MAINLINE_REVISION))
 SUNXI_MALI_MAINLINE_BLOB_TYPE = $(call qstrip,$(BR2_PACKAGE_SUNXI_MALI_MAINLINE_BLOB_TYPE))
 
+ifeq ($(BR2_PACKAGE_WAYLAND),y)
+SUNXI_MALI_MAINLINE_DEPENDENCIES += wayland wayland-protocols
+SUNXI_MALI_MAINLINE_INSTALL_GBM = YES
+endif
 
 ifeq ($(BR2_arm),y)
 SUNXI_MALI_MAINLINE_ARCH=arm
@@ -34,7 +38,12 @@ define SUNXI_MALI_MAINLINE_INSTALL_STAGING_CMDS
 		$(STAGING_DIR)/usr/lib/pkgconfig/egl.pc
 	$(INSTALL) -D -m 0644 package/sunxi-mali-mainline/glesv2.pc \
 		$(STAGING_DIR)/usr/lib/pkgconfig/glesv2.pc
+
 endef
+
+ifeq ($(SUNXI_MALI_MAINLINE_INSTALL_GBM),YES)
+SUNXI_MALI_MAINLINE_INSTALL_STAGING_CMDS += $(INSTALL) -D -m 0644 package/sunxi-mali-mainline/gbm.pc $(STAGING_DIR)/usr/lib/pkgconfig/gbm.pc
+endif
 
 define SUNXI_MALI_MAINLINE_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/usr/lib

@@ -38,6 +38,7 @@ define SUNXI_MALI_MAINLINE_INSTALL_STAGING_CMDS
 		$(STAGING_DIR)/usr/lib/pkgconfig/egl.pc
 	$(INSTALL) -D -m 0644 package/sunxi-mali-mainline/glesv2.pc \
 		$(STAGING_DIR)/usr/lib/pkgconfig/glesv2.pc
+
 endef
 
 ifeq ($(SUNXI_MALI_MAINLINE_INSTALL_GBM),YES)
